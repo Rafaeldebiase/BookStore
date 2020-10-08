@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12" >
+                            <button id="incluir" class="btn btn-primary btn-xs margemBottonApp" data-toggle="modal" data-target="#modalIncluir">Incluir</button>
+                            <button id="pesquisaAvancada" class="btn btn-primary btn-xs margemBottonApp" data-toggle="collapse" data-target="#collapseExample">Pesquisa avançada</button>
+                            <div class="collapse" id="collapseExample">
+                                <div class="card card-body margemBottonApp">
+                                    <label class="control-label col-md-2">Tipo da pesquisa</label>
+                                    <select class="larguraPesquisa" id="pesquisaavancada">
+                                        <option value="0">Buscar pelo codigo</option>
+                                        <option value="1">Buscar pelo titulo</option>
+                                        <option value="3">Buscar pelo isbn</option>
+                                    </select>
+                                    <label class="control-label col-md-2">Pesquisa</label>
+                                    <input id="pesquisa" type="text" class="form-control margemBottonApp" placeholder="pesquisa"/>
+                                    <button class="btn btn-primary larguraBotaoPesquisa" onClick="pesquisar()">Pesquisar</button>
+                                </div>
+                            </div>
+                            <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Codigo</th>
+                                        <th>Titulo</th>
+                                        <th>Subtítulo</th>
+                                        <th>Autor</th>
+                                        <th>Isbn</th>
+                                        <th>Ano</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalIncluir" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <form id="formIncluir" ajax="true">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Adicionar livro</h4>
+                    </div>
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Titulo</label>
+                                <input id="titulo" type="text" class="form-control mymargin" placeholder="título"/>
+                                <label class="control-label col-md-2">Subtítulo</label>
+                                <input id="subtitulo" type="text" class="form-control mymargin" placeholder="subtítulo"/>
+                                <label class="control-label col-md-2">Autor</label>
+                                <input id="primeironome" type="text" class="form-control mymargin" placeholder="nome"/>
+                                <input id="sobrenome" type="text" class="form-control mymargin" placeholder="sobrenome"/>
+                                <label class="control-label col-md-2">ISBN</label>
+                                <input id="isbn" type="text" class="form-control mymargin" placeholder="ISBN"/>
+                                <label class="control-label col-md-2">Ano</label>
+                                <input id="ano" type="number" class="form-control" placeholder="ano"/>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <button class="btn btn-danger" onClick="limparFormularioIncluir()" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEditar" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <form id="formEditar" ajax="true">
+                <div class="modal-header">
+                    <h4 class="modal-title">Atualizar livro</h4>
+                </div>
+                <div class="modal-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Codigo</label>
+                            <input id="codigo" disabled="true" type="text" class="form-control mymargin" placeholder="título"/>
+                            <label class="control-label col-md-2">Titulo</label>
+                            <input id="tituloEdit" type="text" class="form-control mymargin" placeholder="título"/>
+                            <label class="control-label col-md-2">Subtítulo</label>
+                            <input id="subtituloEdit" type="text" class="form-control mymargin" placeholder="subtítulo"/>
+                            <label class="control-label col-md-2">Autor</label>
+                            <input id="primeironomeEdit" type="text" class="form-control mymargin" placeholder="nome"/>
+                            <input id="sobrenomeEdit" type="text" class="form-control mymargin" placeholder="sobrenome"/>
+                            <label class="control-label col-md-2">ISBN</label>
+                            <input id="isbnEdit" type="text" class="form-control mymargin" placeholder="ISBN"/>
+                            <label class="control-label col-md-2">Ano</label>
+                            <input id="anoEdit" type="text" class="form-control" placeholder="ano"/>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="atualizar" type="submit" class="btn btn-primary">Salvar</button>
+                    <button class="btn btn-danger" onClick="limparFormularioEditar()" data-dismiss="modal">Cancelar</button>
+                </div>
+                    </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPesquisaAvançada" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <form id="formPesquisaAvancada" ajax="true">
+                <div class="modal-header">
+                    <h4 class="modal-title">Pesquisa avançada</h4>
+                </div>
+                <div class="modal-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Tipo da pesquisa</label>
+                            <select id="pesquisaAvancada">
+                                <option value="0">Buscar pelo codigo</option>
+                                <option value="1">Buscar pelo titulo</option>
+                                <option value="2">Buscar pelo isbn</option>
+                            </select>
+                            <label class="control-label col-md-2">Pesquisa</label>
+                            <input id="pesquisa" type="text" class="form-control mymargin" placeholder="pesquisa"/>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Ok</button>
+                    <button class="btn btn-danger" onClick="limparFormularioIncluir()" data-dismiss="modal">Cancelar</button>
+                </div>
+                    </form>
+        </div>
+    </div>
+</div>
+
